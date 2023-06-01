@@ -1,0 +1,57 @@
+* {
+  box-sizing: border-box;
+}
+
+body{
+  font-family: 'Futura PT', sans-serif;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
+.show{
+  display: block!important;
+}
+
+.hide{
+  display: none!important;
+}
+
+.spinner {
+  animation: spin infinite 1.5s linear;
+}
+
+.noScroll{
+  overflow: hidden;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.no-scroll{
+  overflow: hidden
+}
+
+
+.albums-cover::-webkit-scrollbar {
+  display: none;
+}
+
+.albums-cover {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
