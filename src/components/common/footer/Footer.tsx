@@ -1,28 +1,28 @@
 import React from 'react';
-import frameoLogy from './frameologyLogo.png'
-import climateLogo from './climateLogo.svg'
 import { Link } from 'react-router-dom';
+
+import { PRIVACY_POLICY_ROUTE, TERMS_ROUTE } from '../../../utils/consts';
+import climateLogo from './climateLogo.svg'
 import {
   Container,
-  FirstContainer,
-  Title,
-  Frameology,
-  Mission,
-  Questions,
-  Img,
-  FakeButton,
   Copyright,
   Copyright1,
-  LinksContainer,
+  FakeButton,
+  FirstContainer,
+  Frameology,
+  Img,
   Link1,
   Link2,
-  SecondContainer
-} from './components'
-import { PRIVACY_POLICY_ROUTE, TERMS_ROUTE } from '../../../utils/consts';
+  LinksContainer,
+  Mission,
+  Questions,
+  SecondContainer,
+  Title} from './components'
+import frameoLogy from './frameologyLogo.png'
 
 const Footer = () => {
   return (
-    <Container>
+    <Container id="footer">
       <FirstContainer>
         <Title>PhotoDrop is brought to you by</Title>
         <Frameology>
@@ -39,10 +39,10 @@ const Footer = () => {
         <Img src={climateLogo} alt="climateLogo" style={{ marginBottom: '30px' }} />
         <Copyright>© 2022 FOM Online Inc</Copyright>
         <LinksContainer>
-          <Link to={TERMS_ROUTE} target="_blank">
+          <Link to={TERMS_ROUTE}>
             <Link1>Terms of services</Link1>
           </Link>
-          <Link to={PRIVACY_POLICY_ROUTE} target="_blank">
+          <Link to={PRIVACY_POLICY_ROUTE}>
             <Link2>Privacy Party</Link2>
           </Link>
         </LinksContainer>

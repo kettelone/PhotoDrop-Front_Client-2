@@ -1,22 +1,27 @@
-import React from "react";
-import { $host } from ".";
-import Cookies from "universal-cookie";
-const cookies = new Cookies();
+import React from 'react'
+
+import Cookies from 'universal-cookie'
+
+import { $host } from '.'
+const cookies = new Cookies()
 
 class PhotoService {
-  public async getOriginalPhoto(photoId: string) {
-    try {
-      const token = cookies.get("jwt_auth");
-      const data = await $host.get(`/api/albums/photos/${photoId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return data;
-    } catch (e) {
-      return false;
-    }
-  }
+	public async getOriginalPhoto(id: string) {
+		try {
+			const token = cookies.get('jwt_auth')
+			const data = await $host.get('/info/getPhoto', {
+				headers: {
+					Authorization: `Bearer ${token}`
+				},
+				params: {
+					photoID: id
+				}
+			})
+			return data
+		} catch (e) {
+			return false
+		}
+	}
 }
 
-export default new PhotoService();
+export default new PhotoService()

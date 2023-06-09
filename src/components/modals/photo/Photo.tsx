@@ -1,39 +1,35 @@
-import React, {useState} from 'react';
-import paymentService from '../../../service/paymentService';
-import { saveAs } from 'file-saver';
-import {
-  Img, Wrapper, Container, CloseButton, DownloadContainer,
-  Arrow,
-  Line,
-  Text,
-  ButtonContainer,
-  StyledButton
-} from './components'
-import closeIcon from '../../../assets/closeIcon.svg'
-import arrowDown from './arrowDown.svg'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useState } from 'react';
+
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { saveAs } from 'file-saver';
+
+import closeIcon from '../../../assets/closeIcon.svg'
+import paymentService from '../../../service/paymentService';
+import arrowDown from './arrowDown.svg'
+import {
+  Arrow,
+  ButtonContainer,
+  CloseButton,
+  Container,
+  DownloadContainer,
+  Img,
+  Line,
+  StyledButton,
+  Text,
+  Wrapper
+} from './components'
 
 
-const PhotoModal = (props:
-  {
+const PhotoModal = (props:{
     url: string,
     photoId: string,
     isPaid: boolean,
     albumId: string | undefined,
-    photoCover: string,
-    albumName: string
-  }) => {
+}) => {
   
   const [isLoading, setIsLoading] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
-    if (props.albumId) {
-    localStorage.setItem('albumID', props.albumId)
-    localStorage.setItem('albumCover', props.photoCover)
-    localStorage.setItem('albumName', props.albumName)
-    }
-
-
   const handlePayment = async () => {
     setIsLoading(true)
     setIsDisabled(true)
@@ -49,12 +45,14 @@ const PhotoModal = (props:
   
   const closeModal = () => {
     document.getElementById('singlePhoto')?.classList.remove('show')
+    document.getElementById('root')?.classList.remove('noScroll')
+    document.getElementById('footer')?.classList.remove('hide')
     document.body.classList.remove('noScroll')
   }
 
-  const saveImage = (url:string) => {
-    saveAs(url, 'image.jpg') // Put your image url here.
-  }
+  // const saveImage = (url:string) => {
+  //   saveAs(url, 'image.jpg') // Put your image url here.
+  // }
 
   return (
     <Wrapper id='singlePhoto'>
@@ -65,15 +63,12 @@ const PhotoModal = (props:
       </CloseButton>
       <Container>
         <Img src={props.url} alt={props.photoId} />
-
       </Container>
       {
         props.isPaid
           ? <DownloadContainer
-            // onClick={()=>saveImage(props.url)}
             href={props.url} download
           >
-            {/* <a href={props.url} download>Download</a> */}
           <Arrow src={arrowDown} alt="arrowDown" />
           <Line />
           <Text>Download</Text>

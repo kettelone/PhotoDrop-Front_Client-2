@@ -27,23 +27,22 @@ const Wrapper = styled.div`
 	transform: translate(-50%, -50%);
 	width: 379px;
 	height: 653px;
-	@media only screen and (max-width: 400px) {
+	@media only screen and (max-width: 400px) and (max-height: 740px) {
 		width: 100vw;
 		height: 100vh;
 		max-width: 100%;
 		max-height: 100vh;
 	}
-	@media only screen and (max-height: 653px) {
+	@media only screen and (max-width: 400px) {
 		width: 100vw !important;
 		height: 100vh !important;
 		max-width: 379px;
 		max-height: 100vh;
 	}
 `
-const Img = styled.img`/* width: 100%;
-	height: 100%; */`
-
+const Img = styled.img``
 const TopContainer = styled.div``
+
 const Title = styled.div`
 	color: white;
 	position: fixed;
@@ -54,8 +53,11 @@ const Title = styled.div`
 	font-size: 18px;
 	font-weight: 500;
 
-	@media (max-width: 400px) and (max-height: 550px) {
+	/* @media (max-width: 400px) and (max-height: 550px) {
 		margin-top: 4rem;
+	} */
+	@media (max-width: 400px) {
+		margin-top: 22px;
 	}
 `
 
@@ -68,8 +70,11 @@ const CloseButton = styled.button`
 	margin-left: 15px;
 	padding: 0px;
 	cursor: pointer;
-	@media (max-width: 400px) and (max-height: 550px) {
+	/* @media (max-width: 400px) and (max-height: 550px) {
 		margin-top: 4rem;
+	} */
+	@media (max-width: 400px) {
+		margin-top: 22px;
 	}
 `
 const Instruction = styled.div`
@@ -100,13 +105,14 @@ const ButtonsContainer = styled.div`
 	bottom: 0;
 	right: 50%;
 	transform: translate(50%);
-	margin-bottom: 60px;
+	/* margin-bottom: 60px; */
+	margin-bottom: 40px;
 	justify-content: space-between;
 	max-width: 100%;
 	padding: 0px 15px;
 `
 
-const StyledButton =
+const Label =
 	styled.label <
 	{ color: string, backgroundColor: string } >
 	`
@@ -137,7 +143,7 @@ const StyledButton =
 	}
   `
 
-const StyledButton1 = styled(StyledButton)`
+const Label2 = styled(Label)`
 	 	@media only screen and (min-width: 740px) {
 	 &:hover{
 		background-color:#262626;
@@ -162,8 +168,8 @@ export {
 	CloseButton,
 	Instruction,
 	ButtonsContainer,
-	StyledButton,
-	StyledButton1,
+	Label,
+	Label2,
 	Span,
 	Input
 }

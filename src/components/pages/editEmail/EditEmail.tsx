@@ -1,26 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import {LOGIN_ROUTE, PROFILE_ROUTE } from '../../../utils/consts';
-import { Wrapper, Container,Title, Input, StyledButton,} from './components'
-import accountService from '../../../service/accountService';
+import React, {useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import checkToken from '../../../utils/checkJWT'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import {useAppDispatch } from '../../../app/hooks';
+import { update } from '../../../app/userSlice/userSlice';
+import accountService from '../../../service/accountService';
+import {PROFILE_ROUTE } from '../../../utils/consts';
 import GoBack from '../../common/goBack/GoBack';
+import { Container,Input, StyledButton,Title, Wrapper, } from './components'
 
 
 const EditEmail = () => {
-
-  useEffect(() => {
-    const isLoggedIn = checkToken()
-    if (!isLoggedIn) {
-      navigate(LOGIN_ROUTE)
-    }
-  }, [])
-
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [disabled, setDisabled] = useState(false)
 
 
   const handleChange = (e: any) => {
@@ -29,9 +26,11 @@ const EditEmail = () => {
 
   const saveEmail = async () => {
     setIsLoading(true)
-    if (email) {
+    if (email && !disabled) {
+      setDisabled(true)
       const response = await accountService.editEmail(email)
       if (response) {
+        dispatch(update({ email }))
         navigate(PROFILE_ROUTE)
         setIsLoading(false)
       }

@@ -1,24 +1,22 @@
-import React, {useEffect, useState} from 'react';
-import GoBack from '../../common/goBack/GoBack';
-import { PROVIDE_EMAIL_ROUTE, PROFILE_ROUTE, DASHBOARD_ROUTE, LOGIN_ROUTE } from '../../../utils/consts';
-import { Wrapper,Container, Title, Input, StyledButton } from './components'
-import accountService from '../../../service/accountService';
+import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import checkToken from '../../../utils/checkJWT';
 
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import { useAppDispatch } from '../../../app/hooks';
+import { update } from '../../../app/userSlice/userSlice';
+import accountService from '../../../service/accountService';
+import { PROFILE_ROUTE } from '../../../utils/consts';
+import GoBack from '../../common/goBack/GoBack';
+import { Container, Input, StyledButton,Title, Wrapper } from './components'
 
 
 const EditName = () => {
-  useEffect(() => {
-    const isLoggedIn = checkToken()
-    if (!isLoggedIn) {
-      navigate(LOGIN_ROUTE)
-    }
-},[])
+  const dispatch = useAppDispatch()
   const [name, setName] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [disabled, setDisabled] = useState(false)
   const navigate = useNavigate()
 
   const handleChange = (e: any) => {
@@ -27,9 +25,11 @@ const EditName = () => {
 
   const saveName = async () => {
     setIsLoading(true)
-    if (name) {
+    if (name && !disabled) {
+      setDisabled(true)
       const response = await accountService.editName(name)
       if (response) {
+        dispatch(update({ name }))
         navigate(PROFILE_ROUTE)
         setIsLoading(false)
       }
@@ -62,4 +62,4 @@ const EditName = () => {
   );
 };
 
-export default EditName;
+export default EditName

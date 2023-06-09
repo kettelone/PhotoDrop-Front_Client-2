@@ -1,62 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAppSelector} from '../../../app/hooks';
-import pen from './pen.svg'
-import { ACCOUNT_SETTINGS, ALBUMS_DASHBOARD_ROUTE, DASHBOARD_ROUTE, EDIT_NAME_ROUTE, PROFILE_ROUTE } from '../../../utils/consts';
-import CropSelfie from '../../modals/cropSelfie/CropSelfie';
-import checkToken from '../../../utils/checkJWT';
-import { LOGIN_ROUTE } from '../../../utils/consts';
-import arrowRight from '../../../assets/arrowRight.svg'
-import GoBack from '../../common/goBack/GoBack';
-import defaultImage from '../../../assets/defaultImage.svg';
+import { useLocation,useNavigate } from 'react-router-dom';
 
+import { useAppSelector} from '../../../app/hooks';
+import arrowRight from '../../../assets/arrowRight.svg'
+import defaultImage from '../../../assets/defaultImage.svg';
 import {
-  Wrapper,
-  Container,
-  Welcome,
-  YourSelfie,
-  SelfieContainer,
-  Img,
-  Pen,
-  Blur,
-  IconContainer,
-  Input,
-  Options,
-  Option,
-  Title,
-  Description,
-  ArrowWrapper,
+  ACCOUNT_SETTINGS,
+  EDIT_NAME_ROUTE,
+  MAIN_DASHBOARD_ROUTE,
+  PROFILE_ROUTE} from '../../../utils/consts';
+import GoBack from '../../common/goBack/GoBack';
+import CropSelfie from '../../modals/cropSelfie/CropSelfie';
+import {
   ArrowContainer,
-  LoaderWrapper
+  ArrowWrapper,
+  Container,
+  Description,
+  IconContainer,
+  Img,
+  Input,
+  Option,
+  Options,
+  Pen,
+  SelfieContainer,
+  Title,
+  Welcome,
+  Wrapper,
+  YourSelfie,
  } from './components'
+import pen from './pen.svg'
 
 const Profile = () => {
-  const changedSelfie = useAppSelector(state => state.selfieUpdate.selfieChanged)
-  //once selfie updated sahnge state for the page to reload after timeOut
-  useEffect(() => {
-    const loggedIn = checkToken()
-    if (!loggedIn) {
-      navigate(LOGIN_ROUTE);
-    }
-    setSelfie(localStorage.getItem('selfieUrl'))
-  }, [changedSelfie])
-
-  const [userName, setUserName] = useState(() => {
-    const name = localStorage.getItem("name");
-    return name ;
-  });
-  const [selfie, setSelfie] = useState(() => {
-    const selfie = localStorage.getItem("selfieUrl");
-    return selfie;
-  });
-  const [albumsExist, setAlbumExist] = useState(() => {
-    const value = localStorage.getItem('albumsExist')
-    return value || ''
-  })
+  const userName = useAppSelector(state => state.userUpdate.name)
+  const selfie = useAppSelector(state => state.userUpdate.avatar)
   const [selectedFile, setSelectedFile] = useState<null | File>(null)
-  const [isLoading, setIsLoading] = useState(false)
-
   const navigate = useNavigate()
+  const {state} = useLocation();
   
   const selectPhoto = (event: any) => {
     if (event.target.files) {
@@ -67,13 +46,17 @@ const Profile = () => {
   }
 
   const goBack = () => {
-    if (albumsExist) {
-      navigate(ALBUMS_DASHBOARD_ROUTE)
+    if (state) {
+      navigate(state)
     } else {
-      navigate(DASHBOARD_ROUTE)
-    }
+      navigate(MAIN_DASHBOARD_ROUTE)
 
+    }
   }
+
+  // useEffect(() => {
+  //   return 
+  // }, [selfie])
   return (
     <Wrapper>
       <span onClick={goBack}>
@@ -81,7 +64,7 @@ const Profile = () => {
       </span>
       <Container>
       <CropSelfie selfie={selectedFile} page={PROFILE_ROUTE} />
-      <Welcome>Welcome, {userName}.</Welcome>
+      <Welcome>Welcome, {userName || "Guest"}.</Welcome>
       <YourSelfie>Your selfie</YourSelfie>
       <SelfieContainer>
         <Img src={selfie || defaultImage} alt="selfie" />

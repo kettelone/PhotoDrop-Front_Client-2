@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React  from 'react';
+
 import { update } from '../../../app/countrySlice/countrySlice'
 import { useAppDispatch } from '../../../app/hooks' 
-
 import {
-  Container,
-  SubContainer,
-  HeaderContainer,
-  CommonCoutries,
-  Title,
   CloseButton,
+  CommonCoutries,
+  Container,
+  HeaderContainer,
   OneCountry,
-  SpanCountryName,
   Separator,
+  SpanCountryName,
+  SubContainer,
+  Title,
   Wrapper
 } from './components'
-import {countries, commonCountries} from './info'; 
+import {commonCountries,countries} from './info'; 
 
 const CountrySelect = () => {
   const dispatch = useAppDispatch()

@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
+
 import { RootState } from '../store'
 
 const initialState = {
 	country: 'US',
-	dial_code: '+1',
+	dialCode: '+1',
 	fullNumber: ''
 }
 
@@ -13,7 +14,7 @@ export const countrySlice = createSlice({
 	reducers: {
 		update: (state, { payload: { code, dial } }) => {
 			state.country = code
-			state.dial_code = dial
+			state.dialCode = dial
 		},
 		updateFullNumber: (state, { payload: { fullNumber } }) => {
 			state.fullNumber = fullNumber

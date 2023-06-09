@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+
 import Button from '../../common/button/Button'
 
 const StyledGoBack = styled.div`background-color: yellow;`
@@ -9,7 +10,8 @@ const Wrapper = styled.div`
 	background: white;
 	z-index: 2;
 	width: 100%;
-	min-height: 700px;
+	/* min-height: 700px; */
+	height: 100vh;
 `
 
 const GoBack = styled.div`
@@ -18,6 +20,8 @@ const GoBack = styled.div`
 		margin-left: 40px;
 	}
 `
+
+const Container = styled.div``
 const TopContainer = styled.div`
 	display: flex;
 	align-items: baseline;
@@ -127,6 +131,7 @@ export {
 	Wrapper,
 	StyledGoBack,
 	TopContainer,
+	Container,
 	Name,
 	Date,
 	Amount,

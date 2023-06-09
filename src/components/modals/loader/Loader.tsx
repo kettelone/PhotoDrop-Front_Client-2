@@ -1,6 +1,7 @@
 import React from 'react';
-import loader from './loaderGif.gif'
+
 import { Container, Img, Text, Wrapper } from './components'
+import loader from './loaderGif.gif'
 
 
 const Loader = () => {

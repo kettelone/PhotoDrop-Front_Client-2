@@ -1,22 +1,25 @@
 import styled from 'styled-components'
+
 import Button from '../../common/button/Button'
 
 const Img = styled.img`
 	object-fit: contain;
 	width: 100%;
 	height: 100%;
-	max-width: 90%;
-	@media only screen and (max-height: 647px) {
+	max-width: 100%;
+
+	@media only screen and (max-width: 420px) {
 		max-width: 100%;
-		max-height: 65%;
+		max-height: 70%;
+		margin-top: -21px;
 	}
 `
 const Wrapper = styled.div`
 	display: none;
 	background-color: #262626;
-	width: 100%;
-	height: 100%;
-	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
 	top: 0;
 	z-index: 3;
 	@media only screen and (min-width: 800px) {
@@ -24,8 +27,7 @@ const Wrapper = styled.div`
 	}
 `
 const Container = styled.div`
-	overflow: hidden;
-	position: fixed;
+	position: absolute;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -44,10 +46,14 @@ const CloseButton = styled.button`
 	z-index: 3;
 	background-color: rgba(0, 0, 0, 0);
 	border: none;
-	margin-top: 1.5em;
-	margin-left: 1em;
+	margin-top: 23px;
+	margin-left: 40px;
 	width: 27;
 	height: 27px;
+	@media only screen and (max-width: 400px) {
+		margin-top: 22px;
+		margin-left: 15px;
+	}
 `
 
 const DownloadContainer = styled.a`

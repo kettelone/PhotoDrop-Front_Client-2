@@ -32,9 +32,15 @@ const AlbumsContainer = styled.div`
 	padding-top: 5px;
 	margin-bottom: 10.5%;
 	margin-top: 3.335%;
+	max-width: 1200px;
 	@media only screen and (min-width: 1200px) {
 		padding-left: 0px;
 	}
+`
+
+const AlbumsWrapper = styled.div`
+	overflow-x: scroll;
+	overflow-y: hidden;
 `
 
 const AlbumName = styled.div`
@@ -68,9 +74,18 @@ const Title = styled.div`
 		font-size: 16px;
 	}
 `
+
+const Gradient = styled.div`
+	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+	border-radius: 10px;
+	height: 140px;
+	top: 50%;
+	@media only screen and (min-width: 740px) {
+		height: 254px;
+	}
+`
 const Albums = styled.div`
 	display: flex;
-	overflow-y: scroll;
 	height: 144px;
 	@media only screen and (min-width: 740px) {
 		height: 258px;
@@ -79,6 +94,8 @@ const Albums = styled.div`
 const Album = styled.div`margin-right: 5px;`
 
 const AlbumCover = styled.img`
+	position: relative;
+	z-index: -1;
 	width: 110px;
 	height: 140px;
 	border-radius: 10px;
@@ -126,7 +143,9 @@ export {
 	Container,
 	PhotoIcon,
 	Img,
+	Gradient,
 	AlbumsContainer,
+	AlbumsWrapper,
 	Title,
 	Albums,
 	Album,

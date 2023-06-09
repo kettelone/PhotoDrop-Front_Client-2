@@ -1,48 +1,40 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import React, { ChangeEvent,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import stroke from '../../../assets/stroke.svg'
-import CountrySelect from '../../modals/countrySelect/CountrySelect';
-import { useAppSelector } from '../../../app/hooks'
-import loginService from '../../../service/loginService';
-import { CONFIRM_EDIT_PHONE_ROUTE, LOGIN_ROUTE } from '../../../utils/consts'
-import { updateFullNumber } from '../../../app/countrySlice/countrySlice'
-import { useAppDispatch } from '../../../app/hooks';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import checkToken from '../../../utils/checkJWT';
-import GoBack from '../../common/goBack/GoBack';
-import accountService from '../../../service/accountService';
 
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import { useAppDispatch,useAppSelector } from '../../../app/hooks'
+import { update } from '../../../app/userSlice/userSlice';
+import stroke from '../../../assets/stroke.svg'
+import accountService from '../../../service/accountService';
+import albumService from '../../../service/albumService';
+import { CONFIRM_EDIT_PHONE_ROUTE } from '../../../utils/consts'
+import GoBack from '../../common/goBack/GoBack';
+import CountrySelect from '../../modals/countrySelect/CountrySelect';
 import {
+  Body,
   ButtonContainer,
-  NumberContainer,
-  Numberinput,
-  StrokeImg,
-  FlagImg,
-  StrokeContainer,
+  Container,
   CountryInput,
+  FlagImg,
+  FlagSpan,
   InputContainer,
   InputLabel,
-  Title,
-  Body,
-  Container,
+  NumberContainer,
+  Numberinput,
+  StrokeContainer,
+  StrokeImg,
   StyledButton,
-  FlagSpan
-} from './components'
+  Title} from './components'
 
 
 const EditPhone = () => {
   const navigate = useNavigate()
-  useEffect(() => {
-    const isLoggedIn = checkToken()
-    if (!isLoggedIn) {
-      navigate(LOGIN_ROUTE)
-    }
-  }, [])
-
-  const { country, dial_code } = useAppSelector(state => state.countryUpdate)
+  const { country, dialCode } = useAppSelector(state => state.countryUpdate)
   const [digits, setDigits] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
+  const [disabled, setDisabled] = useState(false)
   const dispatch = useAppDispatch()
 
   const handlePhoneNumber = (event: ChangeEvent<HTMLInputElement>) => {
@@ -57,15 +49,19 @@ const EditPhone = () => {
   }
 
   const handleChange = async () => {
-    if (dial_code && digits.length <= 10 && digits.length >= 9) {
+    if (
+      !disabled
+      && dialCode
+      && digits.length <= 10
+      && digits.length >= 9) {
+      setDisabled(true)
       setIsLoading(true)
-      const fullNumber = `${dial_code.substring(1)}${digits}`
-      dispatch(updateFullNumber({ fullNumber }))
-      localStorage.setItem('phoneNumber', fullNumber)
-      const response = await accountService.editPhone(fullNumber)
-      // await loginService.requestOtp(fullNumber)
-      setIsLoading(false)
-      navigate(CONFIRM_EDIT_PHONE_ROUTE)
+      const fullNumber = `${dialCode.substring(1)}${digits}`
+      dispatch(update({ newPhone: fullNumber }))
+      await accountService.editPhone(fullNumber)
+        setIsLoading(false)
+        navigate(CONFIRM_EDIT_PHONE_ROUTE)
+        setDisabled(false)
     }
   }
 
@@ -94,7 +90,7 @@ const EditPhone = () => {
             </StrokeContainer>
           </CountryInput>
           <NumberContainer>
-            <span>{dial_code}</span>
+            <span>{dialCode}</span>
             <Numberinput
               placeholder='(555) 555-5555'
               maxLength={10}
@@ -106,6 +102,8 @@ const EditPhone = () => {
         <ButtonContainer>
           <StyledButton
             onClick={handleChange}
+            style={{ opacity: digits.length >= 9 ? 1 : 0.5 }}
+            disabled={digits.length >= 9 ? false : true}
           >{isLoading
             ? <FontAwesomeIcon icon={faSpinner} className="spinner" />
             : 'Next'

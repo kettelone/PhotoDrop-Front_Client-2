@@ -1,53 +1,55 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import OtpInput from 'react-otp-input';
-import Button from '../../common/button/Button';
 import { useNavigate } from 'react-router-dom';
-import './index.css'
-import accountService from '../../../service/accountService';
-import { Container, Title, SubTitle, Phone, ResendButton, ButtonContainer, Wrapper, ErrorMessage } from './components'
-import { ACCOUNT_SETTINGS, LOGIN_ROUTE } from '../../../utils/consts';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import checkToken from '../../../utils/checkJWT';
-import GoBack from '../../common/goBack/GoBack';
 
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import { useAppDispatch,useAppSelector } from '../../../app/hooks';
+import { update } from '../../../app/userSlice/userSlice'
+import accountService from '../../../service/accountService';
+import albumService from '../../../service/albumService';
+import { ACCOUNT_SETTINGS } from '../../../utils/consts';
+import Button from '../../common/button/Button';
+import GoBack from '../../common/goBack/GoBack';
+import { ButtonContainer, Container, ErrorMessage,Phone, ResendButton, SubTitle, Title, Wrapper } from './components'
+
+import './index.css'
 
 const NewCodeConfirmation = () => {
-
-  useEffect(() => {
-    const isLoggedIn = checkToken()
-    if (!isLoggedIn) {
-      navigate(LOGIN_ROUTE)
-    }
-  }, [])
-
+  const dispatch = useAppDispatch()
   const [otp, setOtp] = useState('');
   const [resendPressed, setResendPressed] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
-  const [phoneNumber, setPhone] = useState(() => {
-    const savedItem = localStorage.getItem("phoneNumber");
-    return savedItem || "";
-  });
+  const [disabled, setDisabled] = useState(false)
+  const phoneNumber = useAppSelector(state => state.userUpdate.newPhone)
   const navigate = useNavigate()
 
   const handleNext = async () => {
+    if (!disabled) {
+      setIsLoading(true)
+      setDisabled(true)
+      const response = await accountService.phoneVerify(phoneNumber, otp)
+      if (response) {
+        const data = await albumService.getAlbums()
+        if (!data) {
+          return
+        }
+        const { selfieUrl,phone } = data.data.user
+        dispatch(update({ selfieUrl, phone }))
+          navigate(ACCOUNT_SETTINGS)
+          setIsLoading(false)
+          setDisabled(false)
+        } else {
+          setIsError(true)
+          setIsLoading(false)
+          setDisabled(false)
+          setTimeout(() => {
+            setIsError(false)
+          }, 4000)
+        }
 
-    setIsLoading(true)
-    const response = await accountService.phoneVerify(phoneNumber, otp)
-    console.log({ response })
-
-    if (response) {
-      console.log(response)
-
-      navigate(ACCOUNT_SETTINGS)
-      setIsLoading(false)
-    } else {
-      setIsError(true)
-      setIsLoading(false)
-      setTimeout(() => {
-        setIsError(false)
-      }, 4000)
     }
   }
 
@@ -87,7 +89,7 @@ const NewCodeConfirmation = () => {
         <ButtonContainer>
           <Button
             style={{ opacity: otp.length === 6 ? 1 : 0.5 , cursor:"pointer"}}
-            disabled={otp.length === 6 ? false : true}
+            disabled={otp.length !== 6} 
             onClick={handleNext}
           >{
               isLoading

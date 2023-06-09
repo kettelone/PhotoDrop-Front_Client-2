@@ -1,45 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import checkToken from '../../../utils/checkJWT';
+
+import { useAppSelector } from '../../../app/hooks';
+import arrowRight from '../../../assets/arrowRight.svg'
+import { EDIT_EMAIL, EDIT_PHONE_ROUTE, PROFILE_ROUTE } from '../../../utils/consts';
+import GoBack from '../../common/goBack/GoBack';
 import {
-  Header,
-  Wrapper,
-  SubWrapper,
-  Options,
-  Option,
-  OptionContainer,
-  Title,
-  Img,
+  ArrowContainer,
+  ArrowWrapper,
   Description,
   Green,
+  Header,
+  Img,
+  Option,
+  OptionContainer,
+  Options,
+  SubWrapper,
   TextContainer,
-  ArrowWrapper,
-  ArrowContainer
-} from './components'
-import arrowRight from '../../../assets/arrowRight.svg'
-import GoBack from '../../common/goBack/GoBack';
+  Title,
+  Wrapper} from './components'
 import mailIcon from './mailIcon.svg'
 import phoneIcon from './phoneIcon.svg'
-import { DASHBOARD_ROUTE, EDIT_EMAIL, EDIT_PHONE_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE } from '../../../utils/consts';
 
 
 const AccountSettings = () => {
-  useEffect(() => {
-    const isLoggedIn = checkToken()
-    if (!isLoggedIn) {
-      navigate(LOGIN_ROUTE)
-    }
-  }, [])
-  const [phone, setPhone] = useState(() => {
-    const savedItem = localStorage.getItem("phoneNumber");
-    return savedItem || "";
-  });
-
-  const [email, setEmail] = useState(() => {
-    const savedItem = localStorage.getItem("email");
-    return savedItem || "no email";
-  });
   const navigate = useNavigate()
+  const phone = useAppSelector(state => state.userUpdate.phone)
+  const email = useAppSelector(state => state.userUpdate.email)
   return (
     <div>
       <span onClick={() => navigate(PROFILE_ROUTE)}>
@@ -79,7 +66,7 @@ const AccountSettings = () => {
                     Email
                   </Title>
                   <Description>
-                    {email}
+                    {email || 'example@gmail.com'}
                   </Description>
                 </TextContainer>
               </OptionContainer>

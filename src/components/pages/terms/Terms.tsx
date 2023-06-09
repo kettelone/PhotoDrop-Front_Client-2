@@ -1,8 +1,25 @@
-import React from 'react';
-import { Container, SubContainer, Title, P, SubTitle } from './components'
+import React, {useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { useAppSelector } from '../../../app/hooks';
+import defaultImage from '../../../assets/defaultImage.svg';
+import { PROFILE_ROUTE } from '../../../utils/consts';
+import {
+  Container, Img, P, PhotoIcon,
+SubContainer, SubTitle, Title} from './components'
 const Terms = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  },[])
+  const selfie = useAppSelector(state => state.userUpdate.selfieUrl)
+  const navigate = useNavigate()
   return (
     <Container>
+      <PhotoIcon
+        onClick={() => navigate(PROFILE_ROUTE, { state: '/terms-and-conditions' })}
+      >
+        <Img src={selfie || defaultImage} alt="selfie" />
+      </PhotoIcon>
       <SubContainer>
         <Title>Terms of service</Title>
         <P>By registering to use and access the FOM Online, Inc. (“PhotoDrop”) websites located at photodrop.me and frameology.com, the PhotoDrop photo matching service, and texting bot (together, the “Service”), you are agreeing to be bound by these Terms of Use (the “Terms”). The Terms and our Privacy Policy (photodrop.me/terms) govern your use of our Service. By agreeing to these Terms, you represent that you are not a resident of the state of Illinois and will not upload photos to PhotoDrop taken in the state of Illinois.<strong> Please read these Terms carefully. Unless you opt out of arbitration in accordance with the instructions below within 30 days of first agreeing to these Terms, you are agreeing that we will resolve certain disputes between us in binding arbitration on an individual basis rather than in jury trials or class actions.</strong></P>

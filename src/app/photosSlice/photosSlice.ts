@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+
 import { RootState } from '../store'
 
 interface IntialState {
@@ -14,7 +15,7 @@ export const photosSlice = createSlice({
 	initialState,
 	reducers: {
 		updatePhoto: (state, { payload: { allPhotos } }) => {
-			state = allPhotos
+			return (state = allPhotos)
 		}
 	}
 })

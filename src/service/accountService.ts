@@ -1,5 +1,6 @@
-import { $host } from '.'
 import Cookies from 'universal-cookie'
+
+import { $host } from '.'
 const cookies = new Cookies()
 
 class Account {
@@ -82,8 +83,7 @@ class Account {
 				}
 			)
 			const { accessToken } = response.data
-			console.log({ accessToken })
-			//Set cookie
+			// Set cookie
 			cookies.set('jwt_auth', accessToken)
 			return true
 		} catch (e) {

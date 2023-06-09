@@ -37,4 +37,23 @@ const SubTitle = styled.p`
 		line-height: 23.08px;
 	}
 `
-export { Container, SubContainer, Title, SubTitle, P }
+const PhotoIcon = styled.div`
+	position: absolute;
+	top: 0;
+	right: 0;
+	cursor: pointer;
+	margin-right: 15px;
+	margin-top: 10px;
+
+	@media only screen and (min-width: 740px) {
+		margin-right: 33px;
+		margin-top: 12.5px;
+	}
+`
+const Img = styled.img`
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+`
+
+export { Container, SubContainer, Title, SubTitle, P, PhotoIcon, Img }

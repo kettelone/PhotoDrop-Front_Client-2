@@ -18,15 +18,15 @@ const Title = styled.div`
 
 	@media only screen and (min-width: 740px) {
 		font-size: 30px;
-		margin-bottom:10px;
+		margin-bottom: 10px;
 	}
 `
 const P = styled.p`
 	font-size: 16px;
 	margin-bottom: 16px;
 	margin-top: 5px;
-	line-height:20.51px;
-		@media only screen and (min-width: 740px) {
+	line-height: 20.51px;
+	@media only screen and (min-width: 740px) {
 		font-size: 18px;
 		line-height: 23.08px;
 	}
@@ -35,8 +35,27 @@ const SubTitle = styled.p`
 	font-size: 16px;
 	font-weight: 700;
 	margin: 0px;
-		@media only screen and (min-width: 740px) {
+	@media only screen and (min-width: 740px) {
 		font-size: 18px;
 	}
 `
-export { Container, SubContainer, Title, SubTitle, P }
+
+const PhotoIcon = styled.div`
+	position: absolute;
+	top: 0;
+	right: 0;
+	cursor: pointer;
+	margin-right: 15px;
+	margin-top: 10px;
+
+	@media only screen and (min-width: 740px) {
+		margin-right: 33px;
+		margin-top: 12.5px;
+	}
+`
+const Img = styled.img`
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+`
+export { Container, SubContainer, Title, SubTitle, P, PhotoIcon, Img }

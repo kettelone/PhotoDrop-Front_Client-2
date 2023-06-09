@@ -1,53 +1,44 @@
-import React, { useState, ChangeEvent ,useEffect} from 'react';
+import React, { ChangeEvent ,useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import stroke from '../../../assets/stroke.svg'
-import CountrySelect from '../../modals/countrySelect/CountrySelect';
-import { useAppSelector } from '../../../app/hooks'
-import loginService from '../../../service/loginService';
-import { CODE_CONFIRMATION_ROUTE, DASHBOARD_ROUTE } from '../../../utils/consts'
-import { updateFullNumber } from '../../../app/countrySlice/countrySlice'
-import { useAppDispatch } from '../../../app/hooks';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import checkToken from '../../../utils/checkJWT';
 
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import { updateFullNumber } from '../../../app/countrySlice/countrySlice'
+import { useAppDispatch,useAppSelector } from '../../../app/hooks'
+import stroke from '../../../assets/stroke.svg'
+import loginService from '../../../service/loginService';
+import { CODE_CONFIRMATION_ROUTE } from '../../../utils/consts'
+import CountrySelect from '../../modals/countrySelect/CountrySelect';
 import {
-  ConsentP2,
-  ConsentP1,
-  ConsentConatainer,
+  Body,
+  BodyWrapper,
   ButtonContainer,
-  NumberContainer,
-  Numberinput,
-  StrokeImg,
-  FlagImg,
-  StrokeContainer,
+  ConsentConatainer,
+  ConsentP1,
+  ConsentP2,
+  Container,
   CountryInput,
+  FlagImg,
+  FlagSpan,
   InputContainer,
   InputLabel,
-  Title,
-  BodyWrapper,
-  Body,
-  Container,
+  NumberContainer,
+  Numberinput,
+  StrokeContainer,
+  StrokeImg,
   StyledButton,
-  FlagSpan
-} from './components'
+  Title} from './components'
 
 
 const Login = () => {
-const navigate = useNavigate()
-  useEffect(() => {
-    const isLoggedIn = checkToken()
-    if (isLoggedIn) {
-      navigate(DASHBOARD_ROUTE)
-    }
-  },[])
-
-  const { country, dial_code } = useAppSelector(state => state.countryUpdate)
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const { country, dialCode } = useAppSelector(state => state.countryUpdate)
   const [digits, setDigits] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
   const [disabled, setDisabled] = useState(false)
   const [isDisabledCountryInput, setIsDisabledCountryInput] = useState(false)
-  const dispatch = useAppDispatch()
 
   const handlePhoneNumber = (event: ChangeEvent<HTMLInputElement>) => {
     const regex = /^[0-9\b]+$/;
@@ -63,13 +54,12 @@ const navigate = useNavigate()
   }
 
   const handleCreate = async () => {
-    if (dial_code && digits.length <= 10 && digits.length >= 9) {
+    if (dialCode && digits.length <= 10 && digits.length >= 9) {
       setDisabled(true)
       setIsLoading(true)
       setIsDisabledCountryInput(true)
-      const fullNumber = `${dial_code.substring(1)}${digits}`
+      const fullNumber = `${dialCode.substring(1)}${digits}`
       dispatch(updateFullNumber({ fullNumber }))
-      localStorage.setItem('phoneNumber', fullNumber)
       await loginService.requestOtp(fullNumber)
       setIsLoading(false)
       navigate(CODE_CONFIRMATION_ROUTE)
@@ -99,7 +89,7 @@ const navigate = useNavigate()
             </StrokeContainer>
           </CountryInput>
           <NumberContainer>
-            <span>{dial_code}</span>
+              <span>{dialCode}</span>
             <Numberinput
               placeholder='(555) 555-5555'
               maxLength={10}

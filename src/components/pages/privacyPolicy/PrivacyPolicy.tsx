@@ -1,8 +1,23 @@
-import React from 'react';
-import { Container,SubContainer,Title, P, SubTitle } from './components'
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { useAppSelector } from '../../../app/hooks';
+import defaultImage from '../../../assets/defaultImage.svg';
+import { PROFILE_ROUTE } from '../../../utils/consts';
+import { Container, Img,P, PhotoIcon, SubContainer, SubTitle, Title } from './components'
 const PrivacyPolicy = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
+  const selfie = useAppSelector(state => state.userUpdate.selfieUrl)
+  const navigate = useNavigate()
   return (
     <Container>
+      <PhotoIcon
+        onClick={() => navigate(PROFILE_ROUTE, { state: '/privacy-policy' })}
+      >
+        <Img src={selfie || defaultImage} alt="selfie" />
+      </PhotoIcon>
       <SubContainer>
       <Title>Privacy Policy</Title>
       <P>Your privacy is very important to us. Accordingly, we have developed this Privacy Policy in order for you to understand how we collect, use, and disclose information that we receive through our Service. The FOM Online, Inc. (“PhotoDrop,” “us,” “we,” or “our”) website available at photodrop.me and the PhotoDrop photo finding service (together, the “Service”) are owned and operated by PhotoDrop. This Privacy Policy does not apply to any third party websites, services or applications, even if they are accessible through our Service. Also, please note that, unless we define a term in this Privacy Policy, all capitalized terms used in this Privacy Policy have the same meanings as in our Terms of Service. So, please make sure that you have read and understand our Terms of Service.</P>

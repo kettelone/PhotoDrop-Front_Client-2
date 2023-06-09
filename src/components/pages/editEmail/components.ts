@@ -1,5 +1,7 @@
 import React from 'react'
+
 import styled from 'styled-components'
+
 import Button from '../../common/button/Button'
 
 const Wrapper = styled.div``
@@ -43,6 +45,7 @@ const Input = styled.input`
 
 const StyledButton = styled(Button)`
   margin:0px;
+	cursor: pointer;
   width: 100%!important;
   max-width:345px;
 		@media only screen and (min-width: 740px) {
