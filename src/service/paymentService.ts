@@ -17,8 +17,8 @@ class Payment {
 				'/api/payment',
 				{
 					// successLink: `https://c137-86-99-243-248.ngrok-free.app/success`,
-					successUrl: `https://photo-drop-front-client.vercel.app/success`,
-					cancelUrl: `https://photo-drop-front-client.vercel.app/failed`,
+					successUrl: `https://photo-drop-front-client-2.vercel.app/success`,
+					cancelUrl: `https://photo-drop-front-client-2.vercel.app/failed`,
 					albumId: albumID
 					// phoneNumber: decoded.phone
 				},
