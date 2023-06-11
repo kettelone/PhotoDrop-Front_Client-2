@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { log } from 'console'
 import Cookies from 'universal-cookie'
 
 import { $host } from '.'

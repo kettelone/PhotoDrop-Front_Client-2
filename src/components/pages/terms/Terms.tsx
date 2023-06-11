@@ -11,7 +11,7 @@ const Terms = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   },[])
-  const selfie = useAppSelector(state => state.userUpdate.selfieUrl)
+  const selfie = useAppSelector(state => state.userUpdate.avatar)
   const navigate = useNavigate()
   return (
     <Container>

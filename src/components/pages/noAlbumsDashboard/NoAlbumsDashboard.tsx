@@ -27,7 +27,7 @@ import test3 from './test3.jpg';
 
 const Dashboard = () => {
   const navigate = useNavigate()
-  const selfie = useAppSelector(state => state.userUpdate.selfieUrl)
+  const selfie = useAppSelector(state => state.userUpdate.avatar)
   const [url, setUrl] = useState(test1)
 
   const handlePhoto = (url: string) => {
