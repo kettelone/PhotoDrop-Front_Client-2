@@ -27,7 +27,7 @@ const EditName = () => {
     setIsLoading(true)
     if (name && !disabled) {
       setDisabled(true)
-      const response = await accountService.editName(name)
+      const response = await accountService.editInfo('',name,'')
       if (response) {
         dispatch(update({ name }))
         navigate(PROFILE_ROUTE)

@@ -90,6 +90,30 @@ class Account {
 			return false
 		}
 	}
+
+	public async editInfo(email: string, name: string, phoneNumber: string) {
+		try {
+			let body
+			if (!email && !name) {
+				body = { phoneNumber: `+${phoneNumber}` }
+			} else if (!email && !phoneNumber) {
+				body = { name: name }
+			} else if (!phoneNumber && !name) {
+				body = { email: email }
+			}
+			const token = cookies.get('jwt_auth')
+			const response = await $host.patch('/api/user', body, {
+				headers: {
+					Authorization: `Bearer ${token}`
+				}
+			})
+			console.log(response)
+			return true
+		} catch (e) {
+			console.log(e)
+			return false
+		}
+	}
 }
 
 export default new Account()

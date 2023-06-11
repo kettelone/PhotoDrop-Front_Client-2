@@ -46,7 +46,7 @@ const AccountSettings = () => {
                     Phone • <Green>Verified</Green>
                   </Title>
                   <Description>
-                    +{phone}
+                    {phone}
                   </Description>
                 </TextContainer>
               </OptionContainer>

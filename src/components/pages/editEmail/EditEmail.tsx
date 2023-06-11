@@ -28,7 +28,7 @@ const EditEmail = () => {
     setIsLoading(true)
     if (email && !disabled) {
       setDisabled(true)
-      const response = await accountService.editEmail(email)
+      const response = await accountService.editInfo(email, '','')
       if (response) {
         dispatch(update({ email }))
         navigate(PROFILE_ROUTE)

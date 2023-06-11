@@ -58,7 +58,7 @@ const EditPhone = () => {
       setIsLoading(true)
       const fullNumber = `${dialCode.substring(1)}${digits}`
       dispatch(update({ newPhone: fullNumber }))
-      await accountService.editPhone(fullNumber)
+      await accountService.editInfo('','',fullNumber)
         setIsLoading(false)
         navigate(CONFIRM_EDIT_PHONE_ROUTE)
         setDisabled(false)
