@@ -18,6 +18,7 @@ export interface Response {
 			albumID: string
 			photoID: string
 			url: string
+			largePhotoURL: string
 		}[]
 	}
 }

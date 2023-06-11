@@ -14,13 +14,13 @@ class Payment {
 			const decoded: { phone: string } = jwtDecode(token)
 
 			const response = await $host.post(
-				'/stripe/payment',
+				'/api/payment',
 				{
 					// successLink: `https://c137-86-99-243-248.ngrok-free.app/success`,
-					successLink: `https://photo-drop-front-client.vercel.app/success`,
-					failLink: `https://photo-drop-front-client.vercel.app/failed`,
-					albumID: albumID,
-					phoneNumber: decoded.phone
+					successUrl: `https://photo-drop-front-client.vercel.app/success`,
+					cancelUrl: `https://photo-drop-front-client.vercel.app/failed`,
+					albumId: albumID
+					// phoneNumber: decoded.phone
 				},
 				{
 					headers: {

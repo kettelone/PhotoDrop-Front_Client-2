@@ -55,7 +55,7 @@ const AlbumsDashboard = () => {
   }
 
   // handle open photo
-  const handlePhoto = async (id: string, albumID: string) => {
+  const handlePhoto = async (id: string, albumID: string, largePhoto:string) => {
     document.body.classList.add('noScroll')
     document.getElementById('root')?.classList.add('noScroll')
     setOriginalPhotoUrl('')
@@ -69,20 +69,23 @@ const AlbumsDashboard = () => {
     setAlbumId(albumID)
     setPhotoId(id)
     setIsPaid(album[0].isPaid)
+    // if (originalPhotos[id]) {
+    //   setOriginalPhotoUrl(originalPhotos[id])
+    // } else {
+    //   setIsPhotoLoading(true)
+    //   const data = await photoService.getOriginalPhoto(id)
+    //   if (!data) {
+    //     return
+    //   }
 
-    if (originalPhotos[id]) {
-      setOriginalPhotoUrl(originalPhotos[id])
-    } else {
+    //   dispatch(updateOriginalPhotos({ [id]: data?.data }))
+    //   setOriginalPhotoUrl(data?.data) 
       setIsPhotoLoading(true)
-      const data = await photoService.getOriginalPhoto(id)
-      if (!data) {
-        return
-      }
-
-      dispatch(updateOriginalPhotos({ [id]: data?.data }))
-      setOriginalPhotoUrl(data?.data) 
+      const waitFor = (delay: number) => new Promise(resolve => setTimeout(resolve, delay));
+      // await waitFor(1000);
+      setOriginalPhotoUrl(largePhoto) 
       setIsPhotoLoading(false)
-    }
+    // }
     document.getElementById('singlePhoto')?.classList.add('show')
   }
 
@@ -139,7 +142,7 @@ const AlbumsDashboard = () => {
                       className='photos'
                       data-name={photo.photoID}
                       key={photo.url}
-                      onClick={() => handlePhoto(photo.photoID, photo.albumID)}
+                      onClick={() => handlePhoto(photo.photoID, photo.albumID,photo.largePhotoURL)}
                     />
                 )
                 : ''

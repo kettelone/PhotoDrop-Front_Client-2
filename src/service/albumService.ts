@@ -12,7 +12,6 @@ class Album {
 					Authorization: `Bearer ${token}`
 				}
 			})
-			console.log(data)
 			return data
 		} catch (e) {
 			return false

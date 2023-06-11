@@ -51,7 +51,8 @@ const Album = () => {
     setIsPaymentLoading(true)
     setIsDisabled(true)
     if (id) {
-    const paymentLink = await paymentService.requestPayment(id)
+      const paymentLink = await paymentService.requestPayment(id)
+      console.log(paymentLink)
       window.location.replace(paymentLink);
     }
     setTimeout(() => {
@@ -60,7 +61,7 @@ const Album = () => {
     },1000)
   }
 
-  const handlePhoto = async (photoId: string) => {
+  const handlePhoto = async (photoId: string, largePhoto:string) => {
 
     document.body.classList.add('noScroll')
     document.getElementById('footer')?.classList.add('hide')
@@ -69,18 +70,20 @@ const Album = () => {
       dispatch(update({ albumID: id }))
     }
 
-    if (originalPhotos[photoId]) {
-      setOriginalPhotoUrl(originalPhotos[photoId])
-    } else {
-      setIsPhotoLoading(true)
-      const data = await photoService.getOriginalPhoto(photoId)
-      if (!data) {
-        return
-      }
-      dispatch(updateOriginalPhotos({ [photoId]: data?.data }))
-      setOriginalPhotoUrl(data?.data)
-      setIsPhotoLoading(false)
-    }
+    // if (originalPhotos[photoId]) {
+    //   setOriginalPhotoUrl(originalPhotos[photoId])
+    // } else {
+    //   setIsPhotoLoading(true)
+    //   const data = await photoService.getOriginalPhoto(photoId)
+    //   if (!data) {
+    //     return
+    //   }
+    //   dispatch(updateOriginalPhotos({ [photoId]: data?.data }))
+    //   setOriginalPhotoUrl(data?.data)
+    //   setIsPhotoLoading(false)
+    // }
+    setOriginalPhotoUrl(largePhoto)
+
     document.getElementById('singlePhoto')?.classList.add('show')
   }
 
@@ -122,7 +125,7 @@ const Album = () => {
             photos && photos.length > 0
               ? photos.map(photo => 
                    <Photo
-                    onClick={() => handlePhoto(photo.photoID)}
+                  onClick={() => handlePhoto(photo.photoID, photo.largePhotoURL)}
                     src={photo.url}
                     alt="photo"
                     className='photos'

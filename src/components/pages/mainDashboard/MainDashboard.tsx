@@ -26,8 +26,9 @@ const MainDashboard = () => {
         if (!data) {
           return
         }
+      console.log(data)
       const { user, albums, allPhotos } = data.data
-      const { selfieUrl, name, phone, email } = user
+      const { avatar, name, phone, email } = user
       const paidInStore = albumsStore.filter(album => album.isPaid === true)
       const paidInResponse = albums.filter(album => album.isPaid === true)
 
@@ -36,7 +37,7 @@ const MainDashboard = () => {
         ||
         paidInStore.length !== paidInResponse.length 
       ) {
-        dispatch(update({ selfieUrl, name, phone, email }))
+        dispatch(update({ avatar, name, phone, email }))
         dispatch(updateAlbum({ albums }))
         dispatch(updatePhoto({ allPhotos }))
       }

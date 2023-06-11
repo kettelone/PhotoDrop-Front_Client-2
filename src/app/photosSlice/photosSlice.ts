@@ -6,6 +6,7 @@ interface IntialState {
 	photoID: string
 	albumID: string
 	url: string
+	largePhotoURL: string
 }
 
 const initialState: Array<IntialState> = []
