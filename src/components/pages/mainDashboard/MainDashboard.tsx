@@ -26,7 +26,6 @@ const MainDashboard = () => {
         if (!data) {
           return
         }
-      console.log(data)
       const { user, albums, allPhotos } = data.data
       const { avatar, name, phone, email } = user
       const paidInStore = albumsStore.filter(album => album.isPaid === true)

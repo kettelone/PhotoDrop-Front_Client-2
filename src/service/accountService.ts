@@ -68,25 +68,25 @@ class Account {
 
 	public async phoneVerify(newPhone: string, otp: string) {
 		try {
-			const token = cookies.get('jwt_auth')
+			const currentToken = cookies.get('jwt_auth')
 			const response = await $host.post(
-				'/user/changePhone/verify',
-				{},
+				'/api/auth/verify',
 				{
-					params: {
-						newPhone: newPhone,
-						otp: otp
-					},
+					phoneNumber: newPhone,
+					code: otp
+				},
+				{
 					headers: {
-						Authorization: `Bearer ${token}`
+						Authorization: `Bearer ${currentToken}`
 					}
 				}
 			)
-			const { accessToken } = response.data
+			const { token } = response.data
 			// Set cookie
-			cookies.set('jwt_auth', accessToken)
+			cookies.set('jwt_auth', token)
 			return true
 		} catch (e) {
+			console.log(e)
 			return false
 		}
 	}
@@ -107,7 +107,6 @@ class Account {
 					Authorization: `Bearer ${token}`
 				}
 			})
-			console.log(response)
 			return true
 		} catch (e) {
 			console.log(e)

@@ -12,7 +12,6 @@ class Login {
 			const response = await $host.post('/api/auth/singIn', {
 				phoneNumber: `+${login}`
 			})
-			console.log(response)
 
 			return true
 		} catch (e) {
@@ -40,7 +39,6 @@ class Login {
 				phoneNumber: `+${login}`,
 				code: otp
 			})
-
 			const { token } = response.data
 			// Set cookie
 			cookies.set('jwt_auth', token)

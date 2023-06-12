@@ -23,7 +23,7 @@ const NewCodeConfirmation = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const [disabled, setDisabled] = useState(false)
-  const phoneNumber = useAppSelector(state => state.userUpdate.newPhone)
+  const phoneNumber = useAppSelector(state => state.userUpdate.phone)
   const navigate = useNavigate()
 
   const handleNext = async () => {
@@ -68,7 +68,7 @@ const NewCodeConfirmation = () => {
       </span>
       <Container>
         <Title>What`s the code?</Title>
-        <SubTitle>Enter the code sent to <Phone>+{phoneNumber}</Phone></SubTitle>
+        <SubTitle>Enter the code sent to <Phone>{phoneNumber}</Phone></SubTitle>
         <OtpInput
           value={otp}
           onChange={setOtp}
